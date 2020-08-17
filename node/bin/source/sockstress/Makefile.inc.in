@@ -1,0 +1,5 @@
+CC=@CC@
+CFLAGS=@CFLAGS@ -Wall
+LDFLAGS=-Lext/patricia_trie @LIBS@ -lpatricia
+
+PROGNAME=sockstress

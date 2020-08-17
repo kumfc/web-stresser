@@ -1,0 +1,1073 @@
+/*  screen.css - Based on Modern theme
+*/
+
+/* content styles */
+
+## CERT-FI colors
+# #57B6E4 blue
+# #A2D3F0 lighter blue
+# #504F85 darker blue
+# #ff9901 orange
+# #AEB2C9 light gray
+
+html {
+	background-color: #444;
+}
+
+body {
+    padding: 0;
+    border: 0;
+	margin: 0;
+    color: #072f7a;
+	background-color: #fff;
+	background-image: url("../img2/cert-header-top-with-logo.png");
+	background-repeat: no-repeat;
+	background-position: top left;
+    border: 30px solid #444;
+    border-top: 20px solid #444;
+    border-bottom: 20px solid #444;
+}
+
+input {
+    /* does strange effect to button (text size becomes bigger when clicking)
+    font-size: 1em;
+    font-family: Arial, Lucida Grande, sans-serif;
+    */
+}
+
+textarea {
+    font-size: 1em;
+    font-family: monospace;
+}
+
+.disabled {
+    /* IE ignore disabled attribute, but at least show items in gray */
+    color: gray;
+}
+
+#footer .disabled {
+    /* IE ignore disabled attribute, but at least show items in gray */
+    color: #afa;
+	visibility: hidden;
+}
+
+/* user interface styles */
+
+#header {
+    margin: 0px 20px 0px 35px;
+    padding: 30px 28px 0px 0px;
+    height: 120px;
+#	background-image: url(../img2/cert-logo.png);
+#	background-repeat: no-repeat;
+#	background-position: top right;
+}
+
+#logo {
+    float: left;
+    margin: -1px 30px 0px 10px;
+    padding: 0;
+    /* For text only logo */
+    font-size: 1.4em;
+    line-height: 1em;
+    font-weight: bold;
+}
+
+*[dir="rtl"] #logo {
+    float: right;
+}
+
+#logo img {
+    vertical-align: middle;
+}
+
+#logo a {
+    color: black;
+    text-decoration: none;
+}
+
+#username {
+    margin: 65px 18px 10px 0px;
+    padding: 0;
+    text-align: right;
+    font-size: 0.75em;
+    white-space: nowrap;
+	clear: both;
+}
+
+#username a:link,
+#username a:visited {
+	color: #666;
+}
+
+*[dir="rtl"] #username {
+    text-align: left;
+    margin: 5px 0px;
+}
+
+#username li {
+    display: inline;
+    padding: 0 0.5em 0 0;
+}
+
+#username form {
+    display: inline;
+}
+
+#username input {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: #E7E7E7; /* inherit doesnt work on IE */
+    color: blue;
+    font-size: 0.82em;
+    cursor: pointer;
+}
+
+#username input:hover {
+    color: red;
+}
+
+#searchform {
+    float: right; 
+    margin: 12px 0px 0px 0px;
+    padding-right: 70px; 
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+*[dir="rtl"] #searchform {
+    float: left;
+}
+
+#searchform form div {
+    display: inline;
+}
+
+input#searchinput {
+	background-color: #eee;
+	border: 1px solid #ccc;
+	padding: 1px 1px 1px 2px;
+	font-size: 12px;
+}
+
+input#titlesearch, input#fullsearch {
+	color: #072f7a; /*#abb3ba;*/
+    background-color: #504F85;
+    border: 2px outset rgb(170,162,154);
+	border: 1px solid #999;
+	border: 0;
+	color: #fff;
+    position: relative;
+	font-size: 12px;
+}
+
+#pagetrail {
+    clear: both;
+    float: left;
+    display: inline;
+    margin: 20px 12px 20px 50px;
+    padding: 0;
+    font-size: 0.75em;
+}
+
+#pagetrail a:link,
+#pagetrail a:visited {
+	color: #666;
+}
+
+
+*[dir="rtl"] #pagetrail {
+    clear: left;
+}
+
+#interwiki {
+    margin: 5px 0px 0px 12px;
+    display: none;
+    font-size: 1em;
+}
+
+*[dir="rtl"] #interwiki {
+    margin: 5px 0px;
+    display: inline;
+    font-size: 1em;
+}
+
+#interwiki span:after {
+    content: ":";
+}
+
+#locationline {
+    clear: both;
+    padding: 0;
+    margin: 0px 5px 5px 0px;
+    font-size: 0.88em;
+    display: none;
+}
+
+*[dir="rtl"] #locationline {
+    clear: left;
+}
+
+#pagelocation {
+    display: inline;
+    margin: 5px 12px;
+    padding-left: 220px;
+#    color: #ff9901;
+    color: #fff;
+    font-weight: bold;
+}
+
+#pagetrail li, #pagelocation li {
+    display: inline;
+    margin: 0;
+}
+
+/* XXX Warning: non-ascii characters! */
+#pagetrail li:after {
+    content: " » ";
+}
+
+*[dir="rtl"] #pagetrail li:after {
+    content: " « ";
+}
+
+#pagetrail li:last-child:after {
+    content: "";
+}
+
+#pagelocation li:after {
+    content: "/ ";
+}
+
+*[dir="rtl"] #pagelocation li:after {
+    content: " \\ "; /* TODO: check what looks best with RTL */
+}
+
+#pagelocation li:last-child:after {
+    content: "";
+}
+
+#navibar {
+	position: absolute;
+	top: 111px;
+	left: 72px;
+	margin: 0;
+	padding: 0;
+    font-size: 0.88em;
+}
+
+#navibar li {
+    float: left;
+    display: inline;
+    margin: 0 2px;
+    padding: 2px 5px;
+	border: 0;
+    white-space: nowrap;
+}
+
+*[dir="rtl"] #navibar li {
+    float: right;
+}
+
+#navibar li.wikilink,
+#navibar li.userlink {
+	color: #fff;
+	padding: 2px 6px 2px 6px;
+	margin-right: 4px;
+	font-weight: bold;
+}
+
+#navibar a, #navibar a:visited {
+    color: ##57B6E4;
+    text-decoration: none;    
+}
+
+#navibar li.current a {
+    font-weight: bold;
+}
+
+#navibar li:hover {
+    background: #ff9901;
+}
+
+#navibar li.current, #navibar li.current:hover {
+    background: #ff9901;
+}
+
+#pageline {
+    clear: both;
+    margin: 0px 12px 0px 12px;
+    padding: 0;
+    width: 100%;
+    /* sync these values, line-height is needed for IE */
+        height: 2px;
+        line-height: 4px;
+    border-bottom: 1px solid #9C9C9C;
+    background: #ff9901;
+    display: none;
+}
+
+.editbar {
+    clear: both;
+    display: block;
+    margin: 5px 5px 0px 15px;
+    padding: 0 8px;
+    white-space: nowrap;
+    font-size: 0.75em;
+	text-align: right;
+}
+
+.editbar form, .editbar form div {
+    display: inline;
+    margin: 0;
+}
+
+.editbar li {
+    display: inline;
+    padding: 0;
+    margin: 4px 6px;
+}
+
+*[dir="rtl"] .editbar li {
+    float: right;
+}
+
+#header .editbar {
+    border-bottom: 1px dotted #9C9C9C;
+}
+
+#footer .editbar {
+	padding-bottom: 4px;
+    margin-top: 5px;
+}
+
+#message_orig {
+    clear: both;
+    margin: 30px 12px 0px 12px;
+    padding: 5px 10px;
+    border-bottom: 1px solid #c9c9c9;
+    background: #E6EAF0;
+}
+
+#message {
+	position: absolute;
+	top: 131px;
+	left: 80px;
+	width: 37%;
+	margin: 0;
+    padding: 5px 10px;
+    border: 1px solid #c9c9c9;
+    background: #E6EAF0;
+}
+
+
+#message p {
+    margin: 5px 0;
+    padding: 0;
+    /* font-weight: bold; */
+}
+
+#message div.buttons {
+    font-weight: normal;
+}
+
+.dialog form {
+    margin: 0 15px;
+}
+
+.dialog td {
+    border: none;
+    padding: 5px;
+}
+
+.dialog td.label {
+    text-align: right;
+    font-weight: bold;
+    width: 25%;
+}
+
+*[dir="rtl"] .dialog td.label {
+    text-align: left;
+}
+
+.dialog td.content input {
+    width: 100%;
+}
+
+#page {
+    margin: 50px 50px 10px 50px;
+    padding: 2px 12px 20px 0px;
+    border-top: 1px dotted #888;
+	font-size: 0.9em;
+	color: #444;
+
+   /* theses are some Firefox 1.5b1 specific extensions, see also the CSS3 draft.
+   -moz-column-width: 25em;
+   -moz-column-gap: 2em;
+   -moz-column-rule: solid black 0.3em;     --   doesn't work yet with 1.5b1!
+
+   TODO: make text/gui editor NOT use #page css, we don't want columns there!
+    */
+}
+
+#content p {
+	margin-right: 10px;
+}
+
+/* We use here dumb css1 ids because of IE suckiness */
+#editor-textarea, #editor-help {
+    font-family: monospace;
+    border: 1px solid #8cacbb;  
+    color: black;
+    background-color: white;
+    padding: 3px;
+    width: 100%;
+    margin-top: 0.5em;
+}
+
+#editor-help {
+    font-size: small;
+    background-color: #EEEEFF;
+}
+
+#editor-comment {
+    font-size: 100%;
+    border: 1px solid #8cacbb;
+    color: black;
+    background-color: white;
+    vertical-align: middle;
+    padding: 1px;
+    display: inline;
+    width: 70%;
+}
+
+#preview, #previewbelow {
+    border: 1px solid #6C7680;
+    padding: 10px 30px 20px 30px;
+    background: url(../img/draft.png);
+    margin-top: 0.5em;
+}
+
+input.button {
+    /*
+    border: 1px solid #8cacbb;  
+    color: black;
+    background-color: #CCCCCC;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 100%;
+    cursor: pointer;
+    margin: 2px;
+    padding: 1px;
+    display: inline;
+    */
+}
+
+#footer {
+    background-image: url(../img2/cert-footer.png);
+    background-repeat: no-repeat;
+    clear: both;
+    margin: 0;
+    height: 85px;
+	color: #efe;
+}
+
+
+#footer a:link, #footer a:visited {
+	color: #5566AA;
+}
+
+/*
+#footer p {
+        text-align: center;
+        font-size: 0.8em;
+        margin-top: 0;
+}
+*/
+
+#footer p {
+        text-align: left;
+        font-size: 0.8em;
+        margin-top: -5px;
+		margin-left: 160px;
+		float: left;
+}
+
+
+#credits, #version, #timings{
+    margin: 5px 10px;
+    padding: 0;
+    text-align: center;
+    font-size: 0.75em;
+    display: none;
+}
+
+
+#credits li, #timings li {
+    display: inline;
+    padding: 0 2px;
+    margin: 0 4px;
+}
+
+#credits img {
+    vertical-align: middle;
+}
+
+.diff {
+    width:99%;
+}
+
+.diff-header {
+    font-weight: bold;
+}
+
+.diff-title {
+    background-color: #C0C0C0;
+}
+
+.diff-added {
+    background-color: #E0FFE0;
+    vertical-align: sub;
+}
+
+.diff-removed {
+    background-color: #FFFFE0;
+    vertical-align: sub;
+}
+
+.diff-added span {
+    background-color: #80FF80;
+}
+
+.diff-removed span {
+    background-color: #FFFF80;
+}
+
+table.navigation {
+    float: right;
+    margin: 2px;
+}
+        
+
+div.userpref {
+	clear: both;
+}
+
+
+/*
+ * Collab menu support
+ *
+ *   tmakinen/2007-11-18
+ */
+
+dl.collab_list {
+  background: #eee;
+  padding: 0px;
+  margin: 0;
+  width: 280px;
+}
+
+dl.collab_list dd.collab_val {
+  display: none;
+}
+
+dl.collab_list:hover dd.collab_val {
+  position: absolute;
+  display: block;
+  background: #fff;
+  border: 1px solid #ccc;
+  width: 400px;
+  margin: -17px 0px 0px 240px;
+  padding: 8px;
+}
+
+dt.collab_key {
+  padding: 4px;
+}
+
+dt.collab_key:hover {
+  background: #ddd;
+}
+
+dd.collab_val {
+  display: none;
+}
+
+
+/* ======= for EventCalendar ========*/
+
+TABLE.eventcalendar {
+    /* margin:auto; */
+}
+
+TD.head_yearmonth {
+    border-width:0px;
+    text-align:center;
+    font-size: large;
+}
+
+TD.head_weekday {
+    width:14%;
+
+    border-style:solid;
+    border-width:1px; 
+    border-color:#000000; 
+    background-color: #ffeeee;
+    
+    font-weight:normal;
+    font-size:10pt;
+    text-align:center;
+}
+
+TD.head_day {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:1px; 
+    border-color:#000000;
+    border-bottom-width:0px;
+    /* background-color: #FFFFEE; */
+    vertical-align: top;
+    font-weight:normal;
+    font-size:10pt;
+    text-align:left;
+}
+
+TD.head_day_sunday {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:1px; 
+    border-color:#000000;
+    border-bottom-width:0px;
+    /* background-color: #FFFFEE; */
+    vertical-align: top;
+    font-weight:normal;
+    font-size:10pt;
+    color: #FF3300;
+    text-align:left;
+}
+
+TD.head_day_today {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:1px; 
+    border-color:#000000;
+    border-bottom-width:0px;
+    background-color: #FFFFAA;
+    vertical-align: top;
+    font-weight: bold;
+    font-size:10pt;
+    text-align:left;
+}
+
+TD.head_day_nbmonth {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:1px; 
+    border-color:#000000;
+    border-bottom-width:0px;
+    background-color: #eeeeee;
+    vertical-align: top;
+    font-weight:normal;
+    font-size:8pt;
+    text-align:left;
+    color: #999999;
+}
+
+TD.cal_eventbox { 
+    line-height: 11px;
+    padding: 1px 3px 1px 3px;
+    margin: 0px 0px 0px 0px;
+    
+    border-style:solid;
+    border-width:1px; 
+    border-top-width:0px;
+    border-bottom-width:0px;
+    border-color:#000000;
+    
+    vertical-align: middle;
+    text-align: center;
+}
+
+TABLE.cal_event { 
+    width:100%;
+
+    padding:0 0 0 0;
+    margin:0 0 0 0;
+    
+    border-width:0px; 
+    align: center;
+    
+}
+
+TD.cal_event {
+    border-style:solid;
+    border-width:1px; 
+    border-color:#cccccc; 
+    padding:3px;
+    margin:0px;
+    text-align:center;
+    color:#3266cd;    
+    font-weight:normal;
+    font-size: 8pt;
+    display: block;
+    vertical-align: middle;
+}
+
+TD.cal_event_append {
+    border-style:solid;
+    border-width:1px; 
+    border-color:#cccccc; 
+    border-left-width:0px;
+    padding:3px;
+    margin:0px;
+    text-align:center;
+    color:#3266cd;    
+    font-weight:normal;
+    font-size: 8pt;
+    display: block;
+    vertical-align: middle;
+}
+
+TD.cal_event_pending {
+    border-style:solid;
+    border-width:1px; 
+    border-color:#cccccc; 
+    border-right-width:0px;
+    padding:3px;
+    margin:0px;
+    text-align:center;
+    color:#3266cd;    
+    font-weight:normal;
+    font-size: 8pt;
+    display: block;
+    vertical-align: middle;
+}
+
+TD.cal_event_append_pending {
+    border-style:solid;
+    border-width:1px; 
+    border-color:#cccccc; 
+    border-left-width:0px;
+    border-right-width:0px;
+    padding:3px;
+    margin:0px;
+    text-align:center;
+    color:#3266cd;    
+    font-weight:normal;
+    font-size: 8pt;
+    display: block;
+    vertical-align: middle;
+}
+
+TD.cal_nbmonth {
+    border-top-width:0px;
+    border-bottom-width:0px;
+    border-color:#000000;
+    background-color: #eeeeee;
+    padding: 2px;
+    margin: 1px;
+}
+
+TD.cal_noevent {
+    border-top-width:0px;
+    border-bottom-width:0px;
+    border-color:#000000;
+    padding: 2px;
+    margin: 1px;
+}
+
+TD.cal_last_nbmonth {
+    border-top-width:0px;
+    border-bottom-width:1px;
+    border-color:#000000;
+    background-color: #eeeeee;
+    padding: 2px;
+    margin: 1px;
+}
+
+TD.cal_last_noevent {
+    border-top-width:0px;
+    border-bottom-width:1px;
+    border-color:#000000;
+    padding: 2px;
+    margin: 1px;
+}
+
+
+TD.list_head {
+    border-width: 1px;
+    border-style: solid;
+    font-size: 11pt;
+    font-weight: bold;
+    background-color: #cccccc;
+}
+
+TD.list_entry {
+    font-size: 10pt;
+    font-weight: normal;
+}
+
+TD.head_dummy_nbmonth {
+    line-height: 5px;
+    border-top-width:0px;
+    border-bottom-width:0px;
+    border-color:#000000;
+    background-color: #eeeeee;
+    padding: 0px;
+    margin: 0px;
+}
+
+TD.head_dummy {
+    line-height: 5px;
+    border-top-width:0px;
+    border-bottom-width:0px;
+    border-color:#000000;
+    padding: 0px;
+    margin: 0px;
+}
+
+TABLE.eventcalendar_menubar {
+    /* margin:auto; */
+}
+
+TD.eventcalendar_menubar {
+    border-width: 0px;
+    /* text-align: left; */
+    font-size: 9pt;
+}
+
+TABLE.eventcalendar_msg {
+    /* margin:auto; */
+}
+
+TD.eventcalendar_msg {
+    background-color: #FFFF66;
+    border-width: 0px;
+    font-size: 9pt; 
+    color: #990000;
+}
+
+TABLE.simplecalendar {
+    /* margin:auto; */
+}
+
+TD.simple_nb {
+    line-height: 10px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:0px; 
+    border-color:#000000;
+    vertical-align: middle;
+    font-weight:normal;
+    font-size:8pt;
+    text-align:center;
+}
+
+TD.simple_event {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:1px; 
+    border-color:#c0c0c0;
+    background-color: #eeffff;
+    vertical-align: middle;
+    font-weight:bold;
+    font-size:8pt;
+    text-align:center;
+}
+
+TD.simple_noevent {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:1px; 
+    border-color:#c0c0c0;
+    vertical-align: middle;
+    font-weight:normal;
+    color: #c0c0c0;
+    font-size:8pt;
+    text-align:center;
+}
+
+TD.simple_event_today {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:2px; 
+    border-color:#ff9999;
+    background-color: #eeffff;
+    vertical-align: middle;
+    font-weight:bold;
+    font-size:8pt;
+    text-align:center;
+}
+
+TD.simple_noevent_today {
+    line-height: 20px;
+    padding:0px;
+    margin:0px;
+    border-style:solid;
+    border-width:2px; 
+    border-color:#ff9999;
+    vertical-align: middle;
+    font-weight:normal;
+    color: #c0c0c0;
+    font-size:8pt;
+    text-align:center;
+}
+
+TD.simple_yearmonth {
+    border-width:0px;
+    text-align:center;
+    font-size: 10pt;
+}
+
+TD.simple_weekday {
+    width:14%;
+
+    padding: 0 1px 0 1px;
+    margin: 0 1px 0 1px;
+
+    border-width:0px; 
+    /* background-color: #ffeeee; */
+    
+    font-weight:bold;
+    font-size:8pt;
+    text-align:center;
+}
+
+TD.cal_daily_noevent {
+    padding: 2px;
+    margin: 1px;
+    width: 96%; 
+    border-style: dotted solid dotted solid; 
+    border-top-color: #eeeeee; 
+    border-bottom-color: #eeeeee; 
+    border-left-color: #aaaaaa; 
+    border-right-color: #aaaaaa; 
+    border-top-width: 1px; 
+    border-bottom-width: 1px; 
+    line-height: 11px; 
+}
+
+TD.cal_eventbox_time {
+    width: 10px;
+    border-width: 0px; 
+    padding: 0px; 
+    margin: 0px; 
+    text-align: left; 
+    vertical-align: top; 
+    font-size: 7pt; 
+    color: #000000;
+}
+
+TD.cal_eventbox_time_event {
+    border-width: 0px; 
+    padding: 0px; 
+    margin: 0px; 
+    text-align: left; 
+    vertical-align: top;
+    font-size: 8pt;
+}
+
+TD.cal_daily_noevent {
+    padding: 2px;
+    margin: 1px;
+    width: 96%; 
+    border-style: dotted solid dotted solid; 
+    border-top-color: #eeeeee; 
+    border-bottom-color: #eeeeee; 
+    border-left-color: #aaaaaa; 
+    border-right-color: #aaaaaa; 
+    border-top-width: 1px; 
+    border-bottom-width: 1px; 
+    line-height: 11px; 
+}
+
+TD.cal_weekly_noevent {
+    padding: 2px;
+    margin: 1px;
+    width: 14%; 
+    border-style: dotted solid dotted solid; 
+    border-top-color: #eeeeee; 
+    border-bottom-color: #eeeeee; 
+    border-left-color: #aaaaaa; 
+    border-right-color: #aaaaaa; 
+    border-top-width: 0px; 
+    border-bottom-width: 0px; 
+    line-height: 11px; 
+
+}
+
+TD.cal_blankeventbox {
+    border-style: dotted solid dotted solid; 
+    border-top-color: #eeeeee; 
+    border-bottom-color: #eeeeee; 
+    border-left-color: #aaaaaa; 
+    border-right-color: #aaaaaa; 
+    border-top-width: 1px; 
+    border-bottom-width: 1px;  
+    line-height: 11px;
+}
+
+TD.cal_weekly_eventbox {
+    border-width: 2px; 
+    border-color: #000000; 
+    vertical-align: top; 
+    font-size: 9pt; 
+}
+
+TD.cal_weekly_eventbox2 {
+    border-style: dotted solid dotted solid; 
+    border-top-color: #eeeeee; 
+    border-bottom-color: #eeeeee; 
+    border-left-color: #aaaaaa; 
+    border-right-color: #aaaaaa; 
+    border-top-width: 0px; 
+    border-bottom-width: 0px; 
+    line-height: 11px;
+}
+
+TD.cal_hourhead {
+    line-height: 11px; 
+    font-weight:normal; 
+    font-size:10pt; 
+    text-align:right; 
+    vertical-align: top;
+}
+
+
+
+/* metatables and includes */
+
+table {
+	margin: 20px 0px 20px 0px;
+}
+
+table tr.meta_header td,
+table tr.header td {
+	background: #ff9901;
+	color: #fff;
+}
+
+a#footer {
+    background-image: none;
+    background-color: #57B6E4;
+    clear: both;
+    margin: 0;
+    padding: 5px;
+	color: #efe;
+}

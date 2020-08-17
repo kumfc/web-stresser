@@ -1,0 +1,40 @@
+
+/* Do not allow orphaned sockets to eat all our resources.
+ * This is direct violation of TCP specs, but it is required
+ * to prevent DoS attacks. It is called when a retransmission timeout
+ * or zero probe timeout occurs on orphaned socket.
+ *
+ * Criteria is still not confirmed experimentally and may change.
+ * We kill the socket, if:
+ * 1. If number of orphaned sockets exceeds an administratively configured
+ *    limit.
+ * 2. If we have strong memory pressure.
+ */
+
+tcp_timer.c line 66
+
+
+also write timers are around
+
+                retry_until = sysctl_tcp_retries2;
+tcp_timer.c line 148
+
+
+later on
+
+        /* *WARNING* RFC 1122 forbids this
+         *
+         * It doesn't AFAIK, because we kill the retransmit timer -AK
+         *
+         * FIXME: We ought not to do it, Solaris 2.5 actually has fixing
+         * this behaviour in Solaris down as a bug fix. [AC]
+         *
+         * Let me to explain. icsk_probes_out is zeroed by incoming ACKs
+         * even if they advertise zero window. Hence, connection is killed only
+         * if we received no ACKs for normal connection timeout. It is not killed
+         * only because window stays zero for some time, window may be zero
+         * until armageddon and even later. We are in full accordance
+         * with RFCs, only probe timer combines both retransmission timeout
+         * and probe timeout in one bottle.                             --ANK
+         */
+

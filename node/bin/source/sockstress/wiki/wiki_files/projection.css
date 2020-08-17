@@ -1,0 +1,60 @@
+/*  projection.css - MoinMoin Slide Styles
+
+Copyright (c) 2003 by Juergen Hermann
+*/
+
+@import url(screen.css);
+
+html { line-height: 1.8em;}
+
+body {
+    padding: 0;
+    border: 0;
+	margin: 0;
+    border: 0px solid #444;
+    border-top: 0px solid #444;
+    border-bottom: 0px solid #444;
+    padding: 40px 0px 0px 0px;
+}
+
+body, b, em, a, span, div, p, td { font-size: 16pt; }
+
+h1 { font-size: 26pt; line-height: 1em;}
+h2 { font-size: 22pt; }
+h3 { font-size: 20pt; }
+h4 { font-size: 18pt; }
+h5 { font-size: 16pt; }
+h6 { font-size: 14pt; }
+
+tt, pre { font-size: 16pt; }
+sup, sub { font-size: 12pt; }
+
+table.navigation {
+    float: right;
+    margin: 2px;
+}
+
+.navigation td, .navigation a {
+	font-size: 10pt;
+    padding: 2px;
+}
+
+#interwiki, #pagelocation, #pageinfo { display: none; }
+
+#page {
+	border: 0;
+	padding: 0;
+	margin-right: 80px;
+	margin-top: 50px;
+	margin-left: 0px;	
+}
+
+#pagebottom {
+    background-image: url(../img2/cert-footer.png);
+    background-repeat: no-repeat;
+    clear: both;
+    margin: 0;
+    padding: 0;
+    height: 85px;
+    color: #efe;
+}

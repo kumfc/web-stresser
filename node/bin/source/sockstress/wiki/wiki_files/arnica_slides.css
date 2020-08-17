@@ -1,0 +1,52 @@
+/*
+arnica_slides styles 
+
+copyright © 2008 MoinMoin:ReimarBauer, MoinMoin:RadomirDopieralski
+license: GNU GPL, see COPYING for details
+*/
+
+a.first_slide:before {content: url(../../arnica/img/arnica_first_slide.png); margin: 0 0.1em; width: 32px; height: 32px}
+a.first_slide_disabled:before {content: url(../../arnica/img/arnica_first_slide_disabled.png); margin: 0 0.1em; width: 32px; height: 32px}
+a.stop_slide:before {content: url(../../arnica/img/arnica_stop_slide.png); margin: 0 0.1em; width: 32px; height: 32px}
+
+
+a.previous_slide:before {content: url(../../arnica/img/arnica_previous_slide.png); margin: 0 0.1em; width: 32px; height: 32px}
+a.next_slide:before {content: url(../../arnica/img/arnica_next_slide.png); margin: 0 0.1em; width: 32px; height: 32px}
+a.pause_slide:before {content: url(../../arnica/img/arnica_pause_slide.png); margin: 0 0.1em; width: 32px; height: 32px}
+a.last_slide:before {content: url(../../arnica/img/arnica_last_slide.png); margin: 0 0.1em; width: 32px; height: 32px}
+a.last_slide_disabled:before {content: url(../../arnica/img/arnica_last_slide_disabled.png); margin: 0 0.1em; width: 32px; height: 32px}
+
+
+div.arnica-slides {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    border-style: outset;
+    border-width: 3px;
+    margin: 2em;
+}
+
+.arnica-slides .navigation-animation {
+    text-align: center;
+    vertical-align: middle;
+    margin: 0.5em;
+}
+
+.arnica-slides .navigation-button {
+    text-align: center;
+    vertical-align: middle;
+    margin: 0.5em;
+}
+
+.arnica-slides .image {
+    text-align: center;
+    vertical-align: middle;
+    margin: 0.5em;
+}
+
+.arnica-slides .image-description {
+    text-align: center;
+    padding: 0.5em;
+    line-height: 1.2;
+    font-size: 70%;
+}

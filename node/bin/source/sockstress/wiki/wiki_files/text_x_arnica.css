@@ -1,0 +1,87 @@
+/*
+arnica thumbnails styles
+
+copyright (C) 2008-2009 MoinMoin:ReimarBauer
+license: GNU GPL, see COPYING for details
+*/
+
+
+.clearboth { clear: both; }
+
+div.arnica {
+    display: block;
+    text-align: center;
+    margin: 0em;
+}
+
+.thumbnail {
+    position: relative;
+    display: block;
+    text-align: center;
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+.arnica .text {
+    position: relative;
+    text-align: left;
+    margin: 0;
+    padding: 0.2em;
+}
+
+.arnica .imagecont {
+    position: relative;
+}
+
+.arnica .title {
+    text-align: center;
+    padding: 0.2em;
+    line-height: 1.2;
+    font-size: 90%;
+}
+
+.arnica .image {
+    position: absolute;
+    bottom: 0;
+    font-size: 0px;
+}
+
+.arnica .description {
+    text-align: left;
+    padding: 0.2em;
+    line-height: 1.2;
+    font-size: 90%;
+}
+
+.arnica .show-datetime {
+    text-align: center;
+    padding: 0.2em;
+    line-height: 1.2;
+    font-size: 90%;
+ }
+
+.arnica form {
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.arnica .html-show-tools {
+    position: relative;
+    width: 100%;
+    padding-top: 2px;
+}
+
+.arnica .html-show-tools ul {
+    display: inline;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.arnica .html-show-tools li {
+    display: table-cell;
+    position: relative;
+    padding: 0 1px 0 1px;
+    margin: 0;
+}
