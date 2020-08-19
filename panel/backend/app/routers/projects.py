@@ -39,3 +39,67 @@ async def editProject(data: EditProjectScheme):
         db_conn.close()
 
     return SimpleResponse(state)
+
+
+@ProjectRouter.post(
+    "/getProject",
+    response_description="Includes project info",
+    description="Request detailed project info"
+)
+async def getProject():
+    ...
+
+
+@ProjectRouter.post(
+    "/getAttack",
+    response_description="Includes attack info",
+    description="Request detailed attack info"
+)
+async def getAttack():
+    ...
+
+
+@ProjectRouter.post(
+    "/finishProject",
+    response_description="Project closed",
+    description="Finish existing project"
+)
+async def finishProject():
+    ...
+
+
+@ProjectRouter.post(
+    "/addAttack",
+    response_description="New attack started",
+    description="Start new attack in existing project"
+)
+async def addAttack():
+    # TODO check if finished
+    # TODO check if attack is already running
+    ...
+
+@ProjectRouter.post(
+    "/finishAttack",
+    response_description="Attack has been stopped",
+    description="Finish an attack"
+)
+async def finishAttack():
+    ...
+
+
+@ProjectRouter.post(
+    "/addAttackPattern",
+    response_description="Pattern successfully added",
+    description="Add custom binary options as a pattern"
+)
+async def addAttackPattern():
+    ...
+
+
+@ProjectRouter.post(
+    "/requestStats",
+    response_description="Enjoy your stats",
+    description="Request accessibility stats during specific attack"
+)
+async def requestStats():
+    ...
