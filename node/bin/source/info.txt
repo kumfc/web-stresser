@@ -1,0 +1,25 @@
+// для атак по типу slowloris tcp, nkiller2, sockstress
+// нужно чтобы система не посылала RST, так как у нас SOCK_RAW
+iptables -A INPUT -s $TARGET_ADDR -p tcp --dport $TARGET_PORT -j DROP
+iptables -A INPUT -s $TARGET_ADDR -p tcp --dport $TARGET_PORT -j DROP
+
+// or this to prevent sending rst to that ip
+iptables -A OUTPUT -p TCP --tcp-flags rst rst -d $TARGET_ADDR -j DROP
+
+from google.oauth2 import service_account
+import googleapiclient.discovery as gapid
+
+main_api_acc = service_account.Credentials.from_service_account_file('servicekey.json')
+compute = gapid.build('compute', 'v1', credentials=main_api_acc)
+
+// API: https://cloud.google.com/compute/docs/reference/rest/v1
+// compute.resource() gives you the specified resource, then just specify the args and .execute()
+// execute is from https://github.com/googleapis/google-api-python-client/blob/master/docs/start.md - how to use the googleapiclient
+// compute with googleapiclient: http://googleapis.github.io/google-api-python-client/docs/dyn/compute_v1.html
+
+// compute examples: https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/compute/api
+
+// gcloud cheatsheet https://gist.github.com/pydevops/cffbd3c694d599c6ca18342d3625af97
+
+// example get all available vms of debian type
+// compute.images().list(project='debian-cloud').execute()
