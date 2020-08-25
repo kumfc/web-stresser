@@ -3,6 +3,7 @@ import googleapiclient.discovery as gapid
 import secrets
 import socket
 import time
+from requests import HTTPError
 
 class GoogleComputeAPI:
     def __init__(self, path, project):
@@ -32,8 +33,13 @@ class GoogleComputeAPI:
         try:
             if self._compute.projects().get(project=project).execute()['name'] != project:
                 self._error = 'Something wrong with key or project, try to check it'
-        except:
-            self._error = 'No permission for specified project "%s", specify new project or key' % (project,)
+        except HTTPError as err:
+            if err.code == 403:
+                self._error = 'No permission for specified project "%s", specify new project or key' % (project,)
+            else:
+                self._error = 'Something wrong with gcloud, can\'t get project, error: "%s"' % (str(err),)
+        except Exception as e:
+            self._error = 'Something wrong with gcloud, can\'t get project, error: "%s"' % (str(err),)
         
         if self._error:
             return
@@ -61,22 +67,20 @@ class GoogleComputeAPI:
         if self._error:
             return
 
-        self.create_machine()
-        if self._error:
-            return
-
     def get_error(self):
         ret = self._error
         self._error = ''
         return ret
 
     def create_machine(self):
+        self._error = ''
+
         if not self._template:
-            self._error = 'Can\'t create machine - no template in class, previous error - "%s"' % (self._error,)
-            return False, self._error
+            self._error = 'Can\'t create machine - no template in class'
+            return False, ''
         if not self._templateMachineProperties:
-            self._error = 'Can\'t create machine - no actual machine properties in class, previous error - "%s"' % (self._error,)
-            return False, self._error
+            self._error = 'Can\'t create machine - no actual machine properties in class'
+            return False, ''
 
         properties = self._templateMachineProperties
 
@@ -97,7 +101,7 @@ class GoogleComputeAPI:
             self._error = 'Can\'t create instance, error during insert: "%s"' % (str(e),)
 
         if self._error:
-            return False, self._error
+            return False, ''
 
         try:
             wait_for_operation(self._compute, self._project, self._zone, op['name'])
@@ -105,7 +109,7 @@ class GoogleComputeAPI:
             self._error = 'Unable to wait for machine creation, error: "%s"' % (str(e),)
 
         if self._error:
-            return False, self._error
+            return False, ''
 
         testInstance = None
         try:
@@ -117,16 +121,38 @@ class GoogleComputeAPI:
             self._error = 'Something really bad happened with creating an instance, name (%s) is different from the one specified during creation (%s)' % (testInstance['name'],properties['name'])
         
         if self._error:
-            return False, self._error
+            return False, ''
 
-        return True, ''
+        return True, properties['name']
+
+    def delete_machine(self, name):
+        self._error = ''
+
+        try:
+            op = self._compute.instances().delete(project=self._project, zone=self._zone, instance=name).execute()
+        except Exception as e:
+            self._error = 'Can\'t delete instance "%s", error: "%s"' % (name, str(e))
+
+        if self._error:
+            return False
+
+        try:
+            wait_for_operation(self._compute, self._project, self._zone, op['name'])
+        except HTTPError as err:
+            if err.code == 400:
+                self._error = 'Can\'t delete instance "%s" - no such instance was previously created. Try to check gcloud.'
+            else:
+                self._error = 'Unable to wait for machine deletion, error: "%s"' % (str(self._error),)
+        except Exception as e:
+           self._error =  'Unable to wait for machine deletion, error: "%s"' % (str(e),)
+        
+        if self._error:
+            return False
+        
+        return True
 
     def check_ready(self):
-        try:
-            if self._compute.projects().get(project=project).execute()['name'] != project:
-                return False, 'Something wrong with key or project, try to check it'
-        except Exception as e:
-            return False, 'No permission for specified project "%s", specify new project or key'
+        return self._ready
 
 def wait_for_operation(compute, project, zone, operation):
     while True:
@@ -144,7 +170,11 @@ def wait_for_operation(compute, project, zone, operation):
 
 def main():
     c = GoogleComputeAPI('main-api-key.json', 'secret-imprint-279817')
-    print(c.get_error())
+    res, name = c.create_machine()
+    if not res:
+        print(c.get_error())
+    else:
+        print('Created machine: %s' % (name,))
 
 if __name__ == '__main__':
     main()
