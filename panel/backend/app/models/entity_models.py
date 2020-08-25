@@ -20,16 +20,20 @@ class CloudMachine(BaseModel):
 
 
 class AttackEntity(BaseModel):
-    attack_type: ATypes
+    id: int
+    attack_type: int
+    target: str
     binary_options: str
+    duration: int
     start_time: int
-    end_time: int = None
 
 
 class Project(BaseModel):
-    name: str
-    machine_list: List[CloudMachine]
-    attack_list: List[AttackEntity]
+    id: int
+    title: str
+    is_finished: bool
+    machine_list: List[CloudMachine] = None
+    attack_list: List[AttackEntity] = None
     start_date: int
-    end_date: int = None
+    end_date: int = 0
 
