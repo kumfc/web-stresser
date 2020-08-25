@@ -10,8 +10,12 @@ class SimpleResponse(BaseModel):
         super().__init__(success=status, **args)
 
 
-class GetProjectListResponseScheme(BaseModel):
+class GetProjectListResponseScheme(SimpleResponse):
     project_list: List[Project]
+
+
+class GetProjectResponseScheme(SimpleResponse):
+    data: Project
 
 
 class CreateProjectResponseScheme(SimpleResponse):
