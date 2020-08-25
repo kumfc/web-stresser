@@ -1,8 +1,10 @@
-from google.oauth2 import service_account
-import googleapiclient.discovery as gapid
 import secrets
 import socket
 import time
+
+import googleapiclient.discovery as gapid
+from google.oauth2 import service_account
+
 
 class GoogleComputeAPI:
     def __init__(self, path, project):
@@ -21,7 +23,7 @@ class GoogleComputeAPI:
 
         # not able to change zone currently, but whatever, do this for easier changing later
         self._zone = 'us-central1-a'
-        
+
         try:
             self._account = service_account.Credentials.from_service_account_file(path)
             self._compute = gapid.build('compute', 'v1', credentials=self._account)
@@ -34,7 +36,7 @@ class GoogleComputeAPI:
                 self._error = 'Something wrong with key or project, try to check it'
         except:
             self._error = 'No permission for specified project "%s", specify new project or key' % (project,)
-        
+
         if self._error:
             return
 
@@ -49,15 +51,15 @@ class GoogleComputeAPI:
                 self._error = 'No template \"main-template\", won\'t be able to create machines. Please create a template on gcloud.'
         except:
             self._error = 'Can\'t get templates, something must be wrong with the key'
-        
+
         if self._error:
             return
-        
+
         try:
             self._templateMachineProperties = self._template['properties']
         except:
             self._error = 'Can\'t get the actual machine template, invalid template received. Try to check gcloud.'
-        
+
         if self._error:
             return
 
@@ -75,7 +77,8 @@ class GoogleComputeAPI:
             self._error = 'Can\'t create machine - no template in class, previous error - "%s"' % (self._error,)
             return False, self._error
         if not self._templateMachineProperties:
-            self._error = 'Can\'t create machine - no actual machine properties in class, previous error - "%s"' % (self._error,)
+            self._error = 'Can\'t create machine - no actual machine properties in class, previous error - "%s"' % (
+            self._error,)
             return False, self._error
 
         properties = self._templateMachineProperties
@@ -109,13 +112,15 @@ class GoogleComputeAPI:
 
         testInstance = None
         try:
-            testInstance = self._compute.instances().get(project=self._project, zone=self._zone, instance=properties['name']).execute()
+            testInstance = self._compute.instances().get(project=self._project, zone=self._zone,
+                                                         instance=properties['name']).execute()
         except Exception as e:
             self._error = 'Unable to get created instance, error: "%s"' % (str(e),)
 
         if testInstance['name'] != properties['name']:
-            self._error = 'Something really bad happened with creating an instance, name (%s) is different from the one specified during creation (%s)' % (testInstance['name'],properties['name'])
-        
+            self._error = 'Something really bad happened with creating an instance, name (%s) is different from the one specified during creation (%s)' % (
+            testInstance['name'], properties['name'])
+
         if self._error:
             return False, self._error
 
@@ -127,6 +132,7 @@ class GoogleComputeAPI:
                 return False, 'Something wrong with key or project, try to check it'
         except Exception as e:
             return False, 'No permission for specified project "%s", specify new project or key'
+
 
 def wait_for_operation(compute, project, zone, operation):
     while True:
@@ -142,9 +148,11 @@ def wait_for_operation(compute, project, zone, operation):
 
         time.sleep(1)
 
+
 def main():
     c = GoogleComputeAPI('main-api-key.json', 'secret-imprint-279817')
     print(c.get_error())
+
 
 if __name__ == '__main__':
     main()
