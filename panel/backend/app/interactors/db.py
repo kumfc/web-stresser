@@ -82,6 +82,46 @@ class MySQLClient:
         finally:
             conn.close()
 
+    def has_started_projects(self):
+        conn = self.get_conn()
+        try:
+            with conn.cursor() as cursor:
+                sql = 'SELECT * FROM `projects` WHERE `is_finished` = 0'
+                cursor.execute(sql)
+                result = cursor.fetchone()
+            return len(result) > 0
+        except:
+            return None
+        finally:
+            conn.close()
+
+    def finish_project(self, project_id):
+        conn = self.get_conn()
+        try:
+            with conn.cursor() as cursor:
+                sql = 'UPDATE `projects` SET `is_finished` = 1 WHERE `id` = %s'
+                cursor.execute(sql, project_id)
+                state = bool(cursor.rowcount)
+            conn.commit()
+            return state
+        except:
+            return False
+        finally:
+            conn.close()
+
+    def get_attack_patterns(self):
+        conn = self.get_conn()
+        try:
+            with conn.cursor() as cursor:
+                sql = 'SELECT * FROM `attack_patterns`'
+                cursor.execute(sql)
+                result = cursor.fetchall()
+            return result
+        except:
+            return None
+        finally:
+            conn.close()
+
     @staticmethod
     def htmlspecialchars(text):
         return text.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
