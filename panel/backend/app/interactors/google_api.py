@@ -5,6 +5,7 @@ import time
 import googleapiclient.discovery as gapid
 from google.oauth2 import service_account
 from requests import HTTPError
+from copy import deepcopy
 
 
 class GoogleComputeAPI:
@@ -93,7 +94,7 @@ class GoogleComputeAPI:
             self._error = 'Can\'t create machine - no actual machine properties in class'
             return False, None, None
 
-        properties = self._templateMachineProperties
+        properties = deepcopy(self._templateMachineProperties)
 
         machineid = secrets.token_hex(self._bytes)
         machine_zone = "projects/%s/zones/%s" % (self._project, self._zone)
