@@ -10,10 +10,8 @@ env = 'dev'
 
 
 def bilbo_baggins():
-    # aaa
-    return True
     if not g.google_api:
-        raise HTTPException(status_code=403, detail="Google Compute Cloud token is not set yet.")
+        raise HTTPException(status_code=403, detail="Google Compute Cloud is not initialized yet.")
 
 
 def main():

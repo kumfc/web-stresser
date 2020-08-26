@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from typing import List
 
 from app.main import g
 from app.models.entity_models import Project, AttackEntity, AttackPattern, ATypes
@@ -69,7 +70,7 @@ async def getProject(project_id: int):
 
     project_item = Project(id=p['id'], title=p['title'], is_finished=bool(p['is_finished']), start_date=p['start_date'],
                            end_date=p['end_date'] if p['end_date'] else 0, attack_list=attack_c_list)
-    # machines = g.google_api.get_machine_list()
+    # machines = g.google_api.get_machine_list() # TODO check project is finished then not return
     return GetProjectResponseScheme(True, data=project_item)
 
 
@@ -81,6 +82,46 @@ async def getProject(project_id: int):
 async def finishProject(project_id: int):
     state = g.db.finish_project(project_id)
     return SimpleResponse(state)
+
+
+@ProjectRouter.post(
+    "/createMachines",
+    response_description="Project closed",
+    description="Finish existing project"
+)
+async def createMachines(count: int):
+    m_list = list()
+    for i in range(count):
+        res, name, ip = g.google_api.create_machine()
+        if not res:
+            print(g.google_api.get_error())
+        else:
+            print(f'Created machine: {name} with ip {ip}')
+            m_list.append([name, ip])
+    print(m_list)
+
+
+@ProjectRouter.post(
+    "/deleteMachines",
+    response_description="Project closed",
+    description="Finish existing project"
+)
+async def deleteMachines(machines: List[str]):
+    bruh = False
+    counter = 0
+    for m in machines:
+        res = g.google_api.delete_machine(m)
+        if not res:
+            err = g.google_api.get_error()
+            print(err)
+            bruh = True
+        else:
+            counter += 1
+
+    if not bruh:
+        return SimpleResponse(True)
+    else:
+        return ErrorResponse(False, error=f'We encountered a problem while removing an instance (wrong name?). {counter}/{len(machines)} machines has been deleted.')
 
 
 @ProjectRouter.post(
@@ -110,11 +151,12 @@ async def finishAttack():
 )
 async def addAttackPattern(data: AttackPattern):
     data.is_default = False
-    if data.attack_type not in ATypes:
+    if data.attack_type not in ATypes._value2member_map_:
         return ErrorResponse(False, error='Unknown attack type!')
 
-    data.bin_opts += '-ip {ip} -p {port} -bl {bl}'  # ну это абстрактно потом поменяю
-    ...
+    data.bin_opts += ' -ip {ip} -p {port} -bl {bl}'  # ну это абстрактно потом поменяю
+    state = g.db.add_attack_pattern(data)
+    return SimpleResponse(state)
 
 
 @ProjectRouter.post(

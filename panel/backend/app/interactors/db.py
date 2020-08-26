@@ -8,7 +8,6 @@ class MySQLClient:
         self.password = password
         self.db = db
 
-
     def get_conn(self):
         try:
             conn = pymysql.connect(host=self.host,
@@ -119,6 +118,20 @@ class MySQLClient:
             return result
         except:
             return None
+        finally:
+            conn.close()
+
+    def add_attack_pattern(self, pattern):
+        conn = self.get_conn()
+        try:
+            with conn.cursor() as cursor:
+                sql = 'INSERT INTO `attack_patterns` (`attack_type`, `title`, `bin_opts`, `is_default`) VALUES (%s, %s, %s, %s)'
+                cursor.execute(sql, (pattern.attack_type, pattern.title, pattern.bin_opts, pattern.is_default))
+                state = bool(cursor.rowcount)
+            conn.commit()
+            return state
+        except:
+            return False
         finally:
             conn.close()
 

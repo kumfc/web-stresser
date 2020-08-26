@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-from fastapi import HTTPException
 from app.models.response_models import SimpleResponse
 from app.main import g
 
@@ -11,6 +10,6 @@ CFGRouter = APIRouter()
     response_description="Token successfully set and validated",
     description="Set auth key for Google Compute Cloud",
 )
-async def setGoogleAuthKey(key: str):
-    return SimpleResponse(g.set_apikey(key))
+async def setGoogleAuthKey(key_file: str = 'main-api-key.json', project_name: str = 'secret-imprint-279817'):
+    return SimpleResponse(g.set_apikey(key_file, project_name))
 
