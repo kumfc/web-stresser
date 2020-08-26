@@ -145,6 +145,8 @@ class GoogleComputeAPI:
         if self._error:
             return False, None
 
+        self.machines[properties['name']] = ip
+
         return True, (properties['name'], ip)
 
     def delete_machine(self, name):
