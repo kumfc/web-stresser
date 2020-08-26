@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Any
-from app.models.entity_models import Project
+from app.models.entity_models import Project, AttackPattern
 
 
 class SimpleResponse(BaseModel):
@@ -8,6 +8,14 @@ class SimpleResponse(BaseModel):
 
     def __init__(self, status: bool, **args) -> None:
         super().__init__(success=status, **args)
+
+
+class ErrorResponse(SimpleResponse):
+    error: str
+
+
+class AttackListResponseScheme(SimpleResponse):
+    attack_list: List[AttackPattern]
 
 
 class GetProjectListResponseScheme(SimpleResponse):
