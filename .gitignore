@@ -244,3 +244,5 @@ node/bin/.DS_Store
 node/.DS_Store
 
 *.iml
+
+panel/backend/app/interactors/.DS_Store

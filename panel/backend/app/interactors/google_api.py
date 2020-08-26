@@ -20,6 +20,9 @@ class GoogleComputeAPI:
         self._account = None
         self._compute = None
 
+        # list of currently available machines
+        self.machines = dict()
+
         # not able to change zone currently, but whatever, do this for easier changing later
         self._zone = 'us-central1-a'
         
@@ -28,6 +31,12 @@ class GoogleComputeAPI:
             self._compute = gapid.build('compute', 'v1', credentials=self._account)
         except:
             self._error = 'Invalid key file supplied, can\'t create service account'
+            return
+
+        try:
+            self._startupscript = open('start.sh').read()
+        except:
+            self._error = 'Can\'t read startup script, won\'t be able to create attacking machines'
             return
 
         try:
@@ -77,10 +86,10 @@ class GoogleComputeAPI:
 
         if not self._template:
             self._error = 'Can\'t create machine - no template in class'
-            return False, ''
+            return False, None
         if not self._templateMachineProperties:
             self._error = 'Can\'t create machine - no actual machine properties in class'
-            return False, ''
+            return False, None
 
         properties = self._templateMachineProperties
 
@@ -94,6 +103,10 @@ class GoogleComputeAPI:
         properties['machineType'] = machine_type
         properties['disks'][0]['deviceName'] = 'disk-%s' % (machineid,)
         properties['disks'][0]['initializeParams']['diskType'] = disk_type
+        if 'items' not in properties['metadata']:
+            properties['metadata']['items'] = [{'key':'startup-script', 'value':self._startupscript}]
+        else:
+            properties['metadata']['items'].append({'key':'startup-script', 'value':self._startupscript})
 
         try:
             op = self._compute.instances().insert(project=self._project, zone=self._zone, body=properties).execute()
@@ -101,7 +114,7 @@ class GoogleComputeAPI:
             self._error = 'Can\'t create instance, error during insert: "%s"' % (str(e),)
 
         if self._error:
-            return False, ''
+            return False, None
 
         try:
             wait_for_operation(self._compute, self._project, self._zone, op['name'])
@@ -109,7 +122,7 @@ class GoogleComputeAPI:
             self._error = 'Unable to wait for machine creation, error: "%s"' % (str(e),)
 
         if self._error:
-            return False, ''
+            return False, None
 
         testInstance = None
         try:
@@ -121,9 +134,18 @@ class GoogleComputeAPI:
             self._error = 'Something really bad happened with creating an instance, name (%s) is different from the one specified during creation (%s)' % (testInstance['name'],properties['name'])
         
         if self._error:
-            return False, ''
+            return False, None
 
-        return True, properties['name']
+        ip = ''
+        try:
+            ip = testInstance['networkInterfaces'][0]['accessConfigs'][0]['natIP']
+        except:
+            self._error = 'Machine created, but unable to get IP, probably instance template doesn\'t allow outside access, please check'
+        
+        if self._error:
+            return False, None
+
+        return True, (properties['name'], ip)
 
     def delete_machine(self, name):
         self._error = ''
@@ -149,6 +171,11 @@ class GoogleComputeAPI:
         if self._error:
             return False
         
+        try:
+            self.machines.pop(name)
+        except:
+            pass
+
         return True
 
     def check_ready(self):
@@ -174,7 +201,7 @@ def main():
     if not res:
         print(c.get_error())
     else:
-        print('Created machine: %s' % (name,))
+        print('Created machine: %s with ip %s' % (name[0],name[1]))
 
 if __name__ == '__main__':
     main()
