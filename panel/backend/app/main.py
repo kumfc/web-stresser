@@ -21,7 +21,7 @@ def main():
     if env == 'prod':
         docs_kwargs = dict(docs_url=None, redoc_url=None)
 
-    app = FastAPI(**docs_kwargs)
+    app = FastAPI(title="extremalny dudos", **docs_kwargs)
     app.include_router(conf_r.CFGRouter)
     app.include_router(proj_r.ProjectRouter, dependencies=[Depends(bilbo_baggins)])
 

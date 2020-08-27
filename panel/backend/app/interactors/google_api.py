@@ -79,6 +79,9 @@ class GoogleComputeAPI:
         if self._error:
             return
 
+    def get_machine_list(self):
+        return self.machines
+
     def get_error(self):
         ret = self._error
         self._error = ''

@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List
 from enum import Enum
+from collections import namedtuple
 
 
 class MState(Enum):
@@ -9,12 +10,16 @@ class MState(Enum):
 
 
 class ATypes(Enum):
-    HTTP_FLOOD = 0
-    SLOW_HTTP = 1
-    BENIS = 2
+    hping3 = 1
+    slowhttptest = 2
+    hey = 3
+    
+    def __repr__(self):
+        return self.name
 
 
 class CloudMachine(BaseModel):
+    name: str
     ip: str
     state: MState
 
@@ -32,8 +37,8 @@ class Project(BaseModel):
     id: int
     title: str
     is_finished: bool
-    machine_list: List[CloudMachine]
-    attack_list: List[AttackEntity]
+    machine_list: List[CloudMachine] = None
+    attack_list: List[AttackEntity] = None
     start_date: int
     end_date: int = 0
 

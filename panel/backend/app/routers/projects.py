@@ -2,10 +2,10 @@ from fastapi import APIRouter
 from typing import List
 
 from app.main import g
-from app.models.entity_models import Project, AttackEntity, AttackPattern, ATypes
+from app.models.entity_models import Project, AttackEntity, AttackPattern, ATypes, CloudMachine
 from app.models.request_models import CreateProjectScheme, EditProjectScheme
 from app.models.response_models import SimpleResponse, CreateProjectResponseScheme, GetProjectListResponseScheme, \
-    GetProjectResponseScheme, ErrorResponse, AttackListResponseScheme
+    GetProjectResponseScheme, ErrorResponse, AttackListResponseScheme, CreateMachinesResponseScheme
 
 ProjectRouter = APIRouter()
 
@@ -68,9 +68,15 @@ async def getProject(project_id: int):
                                           start_time=a['start_time'], binary_options=a['bin_opts'],
                                           duration=a['duration']))
 
+    m_list = list()
+    if not bool(p['is_finished']):
+        machines = g.google_api.get_machine_list()
+        for name, ip in machines.items():
+            m_list.append(CloudMachine(name=name, ip=ip, state=1))  # TODO state checking
+
     project_item = Project(id=p['id'], title=p['title'], is_finished=bool(p['is_finished']), start_date=p['start_date'],
-                           end_date=p['end_date'] if p['end_date'] else 0, attack_list=attack_c_list)
-    # machines = g.google_api.get_machine_list() # TODO check project is finished then not return
+                           end_date=p['end_date'] if p['end_date'] else 0, attack_list=attack_c_list, machine_list=m_list)
+
     return GetProjectResponseScheme(True, data=project_item)
 
 
@@ -97,8 +103,8 @@ async def createMachines(count: int):
             print(g.google_api.get_error())
         else:
             print(f'Created machine: {name} with ip {ip}')
-            m_list.append([name, ip])
-    print(m_list)
+            m_list.append(CloudMachine(name=name, ip=ip, state=1))  # TODO state checking
+    return CreateMachinesResponseScheme(True, machine_list=m_list)
 
 
 @ProjectRouter.post(
@@ -168,7 +174,7 @@ async def getAttackPatterns():
     p_list = g.db.get_attack_patterns()
     a_list = list()
     for p in p_list:
-        a_list.append(AttackPattern(attack_type=p['attack_type'], title=p['title'], bin_opts=p['bin_opts'],
+        a_list.append(AttackPattern(attack_type=p['bin_id'], title=p['title'], bin_opts=p['bin_opts'],
                                     is_default=p['is_default']))
 
     return AttackListResponseScheme(True, attack_list=a_list)

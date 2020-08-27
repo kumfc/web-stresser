@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Any
-from app.models.entity_models import Project, AttackPattern
+from app.models.entity_models import Project, AttackPattern, CloudMachine
 
 
 class SimpleResponse(BaseModel):
@@ -24,6 +24,10 @@ class GetProjectListResponseScheme(SimpleResponse):
 
 class GetProjectResponseScheme(SimpleResponse):
     data: Project
+
+
+class CreateMachinesResponseScheme(SimpleResponse):
+    machine_list: List[CloudMachine]
 
 
 class CreateProjectResponseScheme(SimpleResponse):
