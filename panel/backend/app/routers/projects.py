@@ -3,7 +3,7 @@ from typing import List
 
 from app.main import g
 from app.models.entity_models import Project, AttackEntity, AttackPattern, ATypes, CloudMachine
-from app.models.request_models import CreateProjectScheme, EditProjectScheme
+from app.models.request_models import CreateProjectScheme, EditProjectScheme, CreateAttackScheme
 from app.models.response_models import SimpleResponse, CreateProjectResponseScheme, GetProjectListResponseScheme, \
     GetProjectResponseScheme, ErrorResponse, AttackListResponseScheme, CreateMachinesResponseScheme
 
@@ -135,9 +135,11 @@ async def deleteMachines(machines: List[str]):
     response_description="New attack started",
     description="Start new attack in existing project"
 )
-async def startAttack():
-    # TODO check if finished
-    # TODO check if attack is already running
+async def startAttack(data: CreateAttackScheme):
+    if not g.db.is_valid_project(data.project_id):
+        return ErrorResponse(False, error=f'Project with id {data.project_id} is finished or does not exist!')
+    if g.google_api.is_busy():
+        return ErrorResponse(False, error=f'An attack is already running!')
     ...
 
 

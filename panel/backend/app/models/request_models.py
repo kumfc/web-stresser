@@ -1,4 +1,4 @@
-from pydantic import BaseModel, HttpUrl, Field
+from pydantic import BaseModel, Field
 
 
 class CreateProjectScheme(BaseModel):
@@ -13,3 +13,13 @@ class EditProjectScheme(BaseModel):
 class CreateCloudMachinesScheme(BaseModel):
     project_id: int
     count: int
+
+
+class CreateAttackScheme(BaseModel):
+    project_id: int
+    bin_id: int
+    bin_opts: str
+    duration: int
+    bandwidth: int
+    target_ip: str
+    target_port: int

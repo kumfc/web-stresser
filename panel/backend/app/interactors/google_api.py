@@ -191,6 +191,10 @@ class GoogleComputeAPI:
     def check_ready(self):
         return self._ready
 
+    def is_busy(self):
+        return False
+        # TODO check if attack is already running
+
 
 def wait_for_operation(compute, project, zone, operation):
     while True:

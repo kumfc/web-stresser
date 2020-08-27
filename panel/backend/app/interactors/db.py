@@ -94,14 +94,14 @@ class MySQLClient:
         finally:
             conn.close()
 
-    def is_finished_project(self, project_id):
+    def is_valid_project(self, project_id):
         conn = self.get_conn()
         try:
             with conn.cursor() as cursor:
                 sql = 'SELECT `is_finished` FROM `projects` WHERE `id` = %s'
                 cursor.execute(sql, project_id)
                 result = cursor.fetchone()
-            return bool(result['is_finished'])
+            return not bool(result['is_finished'])
         except:
             return None
         finally:

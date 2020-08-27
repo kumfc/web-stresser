@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List
 from enum import Enum
-from collections import namedtuple
 
 
 class MState(Enum):
@@ -13,7 +12,7 @@ class ATypes(Enum):
     hping3 = 1
     slowhttptest = 2
     hey = 3
-    
+
     def __repr__(self):
         return self.name
 
